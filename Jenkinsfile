@@ -88,9 +88,7 @@ def healthCheck() {
 }
 
 pipeline {
-	agent {
-		label 'docker-slave-cluster'
-	}
+	agent any
 	
 //	environment {
 //		BBCREDENTIALS = credentials('BBCREDENTIALS');
