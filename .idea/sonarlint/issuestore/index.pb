@@ -1,0 +1,21 @@
+
+2
+go,1/e/1ec558a60b5dda24597816c924776716018caf8b
+9
+	us/us.iml,c/2/c25ccac54e7b78821dcc9db6c67df0f5ba6f83dd
+W
+'us/actors/src/main/java/ActorsMain.java,5/8/5848c17f644c88f354b8fa96e22fbce44d53cbcc
+V
+&us/actors/src/main/java/AppServer.java,c/e/ce2ac1a7397d939b94f2c741db36ade8b6f87acc
+A
+us/actors/pom.xml,2/4/241465547205849ab91959e32d3e4a3e4f4dd544
+V
+&us/awards/src/main/java/AppServer.java,e/9/e9344306c1ceaa88cf5f21494ed18d9f3f118133
+W
+'us/awards/src/main/java/AwardsMain.java,1/9/19726bdb761d37063ba08a6a5e4ca54cb7ac7223
+V
+&us/movies/src/main/java/AppServer.java,d/a/dab53947bd98af28a168946361e3a6489d8761a5
+W
+'us/movies/src/main/java/MoviesMain.java,f/a/fa6e46dd8e54390b2b03311bb32166644bec3e65
+A
+us/movies/pom.xml,e/a/eacc02d7ef95fc4f4b53a450c85d9b735b728d1a

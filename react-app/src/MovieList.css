@@ -1,0 +1,112 @@
+.movie-list {
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-family: "Lucida Sans Unicode";
+  font-size: 12px;
+  color: blue;
+  width: 100%;
+}
+.movie-get-form {
+  border: 1px solid #666;
+  padding: 8px;
+  background-color: coral;
+}
+
+.movie-get-form-element {
+  border: 1px solid #666;
+  padding: 5px;
+  background-color: darksalmon;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 8px;
+}
+
+.movie-get-form-element label {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.movie-get-form-element input {
+  color: black;
+  font-size: 12pt;
+  margin: 2px;
+}
+
+.movie-get-form-element select {
+  color: #666666;
+  font-size: 12pt;
+  font-weight: bold;
+  margin: 2px;
+}
+
+table, th, td {
+  border: 1px solid grey;
+}
+
+th, td {
+  padding: 1px;
+}
+
+.title {
+  font-weight: bold;
+  color: orangered;
+  font-size: 14px;
+}
+
+.rating {
+  font-weight: lighter;
+  color: black;
+  font-size: 12px;
+}
+
+.plot {
+  font-family: "Lucida Sans Unicode";
+  font-weight: normal;
+  color: #666666;
+  font-size: 16px;
+  width: 100%;
+  border: 0px;
+  padding-top: 12px;
+}
+
+.runtime {
+  font-weight: lighter;
+  color: orangered;
+  font-size: 12px;
+}
+
+.award {
+  font-weight: bold;
+  color: darksalmon;
+  font-size: 16px;
+}
+
+.actors {
+  font-weight: bold;
+  color: #719ECE;
+  font-size: 16px;
+}
+
+.expandable-textarea {
+  font-family: inherit;
+  font-size: inherit;
+
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+}
+.otheroptions {
+  font-size: 8px;
+}
+/* Overriding element hover */
+.optionContainer li:hover,
+.optionContainer .highlight {
+  background: darksalmon;
+  color: black;
+}

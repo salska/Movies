@@ -1,0 +1,32 @@
+
+k	java:S1176"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŒÁÏïüÿÿÿÿ
+m
+java:S1104"RMake awards a static final constant or non-public and provide accessors if needed.(ŸºáÔşÿÿÿÿ
+u
+java:S1104"ZMake connectOptions a static final constant or non-public and provide accessors if needed.(øƒ¯»øÿÿÿÿ
+m
+java:S1104"WMake poolOptions a static final constant or non-public and provide accessors if needed.(¢º²
+k
+java:S1104"PMake pool a static final constant or non-public and provide accessors if needed.(•ºßåúÿÿÿÿ
+G
+java:S1444",Make this "public static awards" field final(ŸºáÔşÿÿÿÿ
+O
+java:S1444"4Make this "public static connectOptions" field final(øƒ¯»øÿÿÿÿ
+G
+java:S1444"1Make this "public static poolOptions" field final(¢º²
+E
+java:S1444"*Make this "public static pool" field final(•ºßåúÿÿÿÿ
+œ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(é õÑşÿÿÿÿ
+8
+java:S2386"Make this member "protected".(ŸºáÔşÿÿÿÿ
+L
+java:S2696"6Make the enclosing method "static" or remove this set.(ÚË¢°
+L
+java:S2696!"6Make the enclosing method "static" or remove this set.(Šéõó
+L
+java:S2696$"6Make the enclosing method "static" or remove this set.(ôí˜ğ
+S	java:S106."9Replace this use of System.out or System.err by a logger.(¢‚ğúÿÿÿÿ
+S	java:S1060"9Replace this use of System.out or System.err by a logger.(Úî÷ıÿÿÿÿ
+S	java:S106E"9Replace this use of System.out or System.err by a logger.(Íäÿıûÿÿÿÿ
+S	java:S106J"9Replace this use of System.out or System.err by a logger.(î€Éûÿÿÿÿ

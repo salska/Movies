@@ -1,0 +1,124 @@
+.movie-form {
+	border: 1px solid #666;
+	padding: 8px;
+	background-color: coral;
+}
+
+.movie-form-element {
+	border: 1px solid #666;
+	padding: 5px;
+	background-color: darksalmon;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 8px;
+}
+
+.deleteButton {
+	background-color: #f4511e;
+	border: none;
+	border-radius: 8px;
+	color: white;
+	font-weight: bold;
+	padding: 8px 16px;
+	text-align: center;
+	font-size: 14px;
+	margin: 4px 2px;
+	opacity: 0.6;
+	transition: 0.3s;
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.deleteButton:hover {opacity: 1}
+
+.saveButton {
+	background-color: teal;
+	border: none;
+	border-radius: 8px;
+	color: white;
+	font-weight: bold;
+	padding: 8px 16px;
+	text-align: center;
+	font-size: 14px;
+	margin: 4px 2px;
+	opacity: 0.6;
+	transition: 0.3s;
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.saveButton:hover {opacity: 1}
+
+.movie-form-element label {
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.movie-form-element input {
+	color: black;
+	font-size: 12pt;
+	margin: 2px;
+}
+
+.movie-form-element select {
+	color: #666666;
+	font-size: 12pt;
+	font-weight: bold;
+	margin: 2px;
+}
+
+.movie-title-element {
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	color: orangered;
+	font-size: 24pt;
+	font-weight: bold;
+	border: lightgrey;
+}
+
+.movie-search-element {
+	margin-right: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	color: grey;
+	font-size: 18pt;
+	font-weight: normal;
+	border: thin solid grey;
+	border-radius: 5px;
+	padding-left: 5px;
+}
+
+.movie-search-element:focus {
+	outline: none !important;
+	border:1px solid cornflowerblue;
+	box-shadow: 0 0 10px #719ECE;
+}
+
+.movie-rating-element {
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	color: #719ECE;
+	font-size: 14pt;
+	font-weight: bold;
+	border: lightgrey;
+}
+
+.movie-single-element {
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	color: black;
+	font-size: 12pt;
+	font-weight: bold;
+	border: lightgrey;
+}

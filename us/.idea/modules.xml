@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/actors/actors.iml" filepath="$PROJECT_DIR$/actors/actors.iml" />
+      <module fileurl="file://$PROJECT_DIR$/awards/awards.iml" filepath="$PROJECT_DIR$/awards/awards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/movies/movies.iml" filepath="$PROJECT_DIR$/movies/movies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/us.iml" filepath="$PROJECT_DIR$/us.iml" />
+    </modules>
+  </component>
+</project>

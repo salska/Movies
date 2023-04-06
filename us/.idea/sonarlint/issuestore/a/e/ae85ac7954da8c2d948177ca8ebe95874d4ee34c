@@ -1,0 +1,19 @@
+
+Q
+java:S1128";Remove this unused import 'io.vertx.core.AbstractVerticle'.(™ª·á
+O
+java:S1128":Remove this unused import 'io.vertx.core.json.JsonObject'.(ûöï
+`
+java:S1128"ERemove this unused import 'io.vertx.mysqlclient.MySQLConnectOptions'.(õ½¥Áüÿÿÿÿ
+J
+java:S1128"4Remove this unused import 'io.vertx.sqlclient.Pool'.(æÀè‘
+Q
+java:S1128";Remove this unused import 'io.vertx.sqlclient.PoolOptions'.(ãï·œ
+I
+java:S1128"3Remove this unused import 'io.vertx.sqlclient.Row'.(’–£É
+W
+java:S1128	"ARemove this unused import 'io.vertx.sqlclient.SqlConnectOptions'.(ªíÖ«
+I
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ
