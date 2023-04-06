@@ -114,85 +114,18 @@ pipeline {
     }
 	
 	stages {
-        
-		stage('Tools: Check') {
-            steps {
-                script {
 
-                    //add environment name
-                    def ENVNAME="";
-                    if(params.TAG_DEPLOY){
-                        ENVNAME= envByTagName();
-                    }else{
-                        ENVNAME= "${params.DEPLOY_ENV}";
-                    }
-                    env.ENVNAME = "${ENVNAME.toLowerCase()}";
-
-                    //Get commit hash
-                    def GIT_COMMIT_HASH="-";
-                    try{
-                        GIT_COMMIT_HASH += sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true);
-                    }catch (error) {
-                        GIT_COMMIT_HASH = "";
-                    }
-
-                    //assign ECR tag and image name
-                    env.ECRTAG="${env.ENVNAME}"
-                    env.ECRIMAGENAME="${params.ECRREPO}:${env.ECRTAG}";
-                }
-            }
-        }
-		
 		stage('Build') {
             steps {
                 script {
                     //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                     echo "Build Started";
 
-                    sh 'mvn -s mvn-settings.xml clean -Pdev';
-                    sh 'mvn -s mvn-settings.xml install -f pom.xml -Dmaven.test.skip=true -Pdev';
-                    sh 'cat ./commercial-hbtw-camunda-range-change/target/classes/application.properties';
-                    def configENVFile="commercial-hbtw-camunda-range-change/src/main/resources/application.properties";
-                    env.configENVFile=configENVFile;
+                    sh 'mvn install -f ./us/actors/pom.xml';
 
                     sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
                     archiveArtifacts artifacts: 'app.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
                     echo "Build Completed";
-                }
-            }
-        }
-
-        stage('Test: Coverage') {
-            options {
-                skipDefaultCheckout true;
-            }
-            when {
-                expression { return params.SONAR_USE;	}
-            }
-            steps {
-                script {
-                    echo "Coverage Test: Sonar";
-                    try {
-                        withSonarQubeEnv('sonarqube') {
-                            sh 'mvn sonar:sonar -Dsonar.login=3a155869bdf0432584bb378bedaf1a5ffe80e97a'
-                        }
-
-                        sh 'zip -r sonar.zip ./commercial-hbtw-camunda-range-change/target/sonar ';
-                        archiveArtifacts artifacts: 'sonar.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
-
-                        if(params.QUALITY_GATE){
-                            timeout(time: 5, unit: 'MINUTES') {
-                                def qg = waitForQualityGate()
-                                  if (qg.status != 'OK') {
-                                      error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                                  }
-                             }
-                        }
-
-                    } catch (err) {
-                        echo "Sonar failed";
-                    }
-                    echo "Coverage Test: Sonar Completed";
                 }
             }
         }
@@ -236,157 +169,6 @@ pipeline {
                             sh '. ../../../utils.sh && execute runTerraform'
                         }
                         echo 'Docker DEV Infra Build .. Completed'
-                    }
-                }
-            }
-        }
-
-        stage('Create infrastructure and deploy code to sit') {
-
-            environment {
-                API_KEY = 'true'
-                API_SECRET = 'sqlite'
-            }
-            when {
-                //expression { return params.DEPLOY_ENV == 'SIT';	}
-                tag 'sit-*'
-            }
-            agent {
-                node { label 'docker-slave-cluster' }
-            }
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'commercial-aws-admin']]) {
-                    script {
-                        replaceInENV("commercial-hbtw-camunda-range-change/configs/release/sit/application.properties","${params.RDS_PASS}");
-                        sh 'mvn -s mvn-settings.xml clean -Psit';
-                        sh 'mvn -s mvn-settings.xml install -f pom.xml -Dmaven.test.skip=true -Psit';
-                        sh '`aws ecr get-login --no-include-email --region eu-west-1`'
-                       echo 'Docker SIT Infra Build..'
-                      // copy into directory
-                      dir('commercial-hbtw-camunda-range-change'){
-                           sh 'mkdir -p docker_build_01'
-                           sh 'cp -f target/camrra.jar docker_build_01/camrra.jar'
-
-                           sh 'cp -rf ops/docker/* docker_build_01/'
-                           sh 'cp -f ops/runApp docker_build_01/'
-                           sh 'chmod 777 -R docker_build_01/*'
-                           dir('docker_build_01'){
-                                sh '. ../utils.sh && execute buildTagAndPushContainer sit Dockerfile'
-                           }
-                       }
-
-                       dir("commercial-hbtw-camunda-range-change/ops/terraform/ecs-service") {
-                            sh '. ../../../utils.sh && execute runTerraform'
-                        }
-                        echo 'Docker SIT Infra Build .. Completed'
-                    }
-                }
-            }
-        }
-
-        stage('Create infrastructure and deploy code to uat') {
-
-                    environment {
-                        API_KEY = 'true'
-                        API_SECRET = 'sqlite'
-                    }
-                    when {
-                        //expression { return params.DEPLOY_ENV == 'UAT';	}
-                        tag 'uat-*'
-                    }
-                    agent {
-                        node { label 'docker-slave-cluster' }
-                    }
-                    steps {
-                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'commercial-aws-admin']]) {
-                            script {
-                                replaceInENV("commercial-hbtw-camunda-range-change/configs/release/uat/application.properties","${params.RDS_PASS}");
-                                sh 'mvn -s mvn-settings.xml clean -Puat';
-                                sh 'mvn -s mvn-settings.xml install -f pom.xml -Dmaven.test.skip=true -Puat';
-                                sh '`aws ecr get-login --no-include-email --region eu-west-1`'
-                               echo 'Docker UAT Infra Build..'
-                              // copy into directory
-                              dir('commercial-hbtw-camunda-range-change'){
-                                   sh 'mkdir -p docker_build_01'
-                                   sh 'cp -f target/camrra.jar docker_build_01/camrra.jar'
-
-                                   sh 'cp -rf ops/docker/* docker_build_01/'
-                                   sh 'cp -f ops/runApp docker_build_01/'
-                                   sh 'chmod 777 -R docker_build_01/*'
-                                   dir('docker_build_01'){
-                                        sh '. ../utils.sh && execute buildTagAndPushContainer uat Dockerfile'
-                                   }
-                               }
-
-                               dir("commercial-hbtw-camunda-range-change/ops/terraform/ecs-service") {
-                                    sh '. ../../../utils.sh && execute runTerraform'
-                                }
-                                echo 'Docker UAT Infra Build .. Completed'
-                            }
-                        }
-                    }
-                }
-
-        stage('Create infrastructure and deploy code to pre') {
-
-            environment {
-                API_KEY = 'true'
-                API_SECRET = 'sqlite'
-            }
-            when {
-                //expression { return params.DEPLOY_ENV == 'PRE';	}
-                tag 'pre-*'
-            }
-            agent {
-                node { label 'docker-slave-cluster' }
-            }
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'commercial-aws-admin']]) {
-                    script {
-                        replaceInENV("commercial-hbtw-camunda-range-change/configs/release/pre/application.properties","${params.RDS_PASS}");
-                        sh 'mvn -s mvn-settings.xml clean -Ppre';
-                        sh 'mvn -s mvn-settings.xml install -f pom.xml -Dmaven.test.skip=true -Ppre';
-                        sh '`aws ecr get-login --no-include-email --region eu-west-1`'
-                       echo 'Docker PRE Infra Build..'
-                      // copy into directory
-                      dir('commercial-hbtw-camunda-range-change'){
-                           sh 'mkdir -p docker_build_01'
-                           sh 'cp -f target/camrra.jar docker_build_01/camrra.jar'
-
-                           sh 'cp -rf ops/docker/* docker_build_01/'
-                           sh 'cp -f ops/runApp docker_build_01/'
-                           sh 'chmod 777 -R docker_build_01/*'
-                           dir('docker_build_01'){
-                                sh '. ../utils.sh && execute buildTagAndPushContainer pre Dockerfile'
-                           }
-                       }
-
-                       dir("commercial-hbtw-camunda-range-change/ops/terraform/ecs-service") {
-                            sh '. ../../../utils.sh && execute runTerraform'
-                        }
-                        echo 'Docker PRE Infra Build .. Completed'
-                    }
-                }
-            }
-        }
-        stage('Docker pull pre image') {
-
-            environment {
-                API_KEY = 'true'
-                API_SECRET = 'sqlite'
-            }
-            when {
-                //expression { return params.DEPLOY_ENV == 'PRE';	}
-                tag 'pre-*'
-            }
-            agent {
-                node { label 'tedoc04x' }
-            }
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'commercial-aws-admin']]) {
-                    script {
-                        sh 'eval $(aws ecr get-login --region eu-west-1 --no-include-email)';
-                        sh 'docker pull 995766112201.dkr.ecr.eu-west-1.amazonaws.com/commercial/camrrav3:pre'
                     }
                 }
             }
