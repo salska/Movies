@@ -127,6 +127,8 @@ pipeline {
                     echo "Build Started";
 
                     sh 'mvn install -f ./us/actors/pom.xml';
+                    sh 'mvn install -f ./us/awards/pom.xml';
+                    sh 'mvn install -f ./us/movies/pom.xml';
 
                     sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
                     archiveArtifacts artifacts: 'app.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
