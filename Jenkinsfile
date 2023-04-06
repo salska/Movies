@@ -92,7 +92,7 @@ pipeline {
 
     tools {
         maven 'Maven'
-        jdk 'JDK12'
+        jdk 'JDK8'
     }
 	
 //	environment {
