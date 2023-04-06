@@ -103,8 +103,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '5'));
 		timestamps();
 		timeout(time: 10, unit: 'MINUTES');
-		//copyArtifactPermission(env.JOB_NAME);
-        copyArtifactPermission('*')
+		copyArtifactPermission(env.JOB_NAME);
 	}
 	
 	parameters {
