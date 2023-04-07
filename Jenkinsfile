@@ -125,10 +125,20 @@ pipeline {
                 script {
                     //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                     echo "Build Started";
-                    sh 'mvn install -f ./us/movies/pom.xml';
-                    sh 'mvn install -f ./us/actors/pom.xml';
-                    sh 'mvn install -f ./us/awards/pom.xml';
+                    dir('./us/actors/'){
+                        sh 'mvn install -f pom.xml';
+                        sh 'docker build --tag actors . '
+                    }
 
+                    dir('./us/movies/'){
+                        sh 'mvn install -f pom.xml';
+                        sh 'docker build --tag movies . '
+                    }
+
+                    dir('./us/actors/'){
+                        sh 'mvn install -f pom.xml';
+                        sh 'docker build --tag actors . '
+                    }
 
                     sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
                     archiveArtifacts artifacts: 'app.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
