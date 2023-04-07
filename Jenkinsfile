@@ -128,7 +128,7 @@ pipeline {
                     dir('./us/actors/'){
                         sh '/usr/bin/mvn install -f pom.xml';
                         sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
-                        sh 'ls -al/';
+                        sh 'ls -al';
                         sh 'docker build --tag actors . '
                     }
 
