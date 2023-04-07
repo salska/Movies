@@ -135,9 +135,9 @@ pipeline {
                         sh 'docker build --tag movies . '
                     }
 
-                    dir('./us/actors/'){
+                    dir('./us/awards/'){
                         sh 'mvn install -f pom.xml';
-                        sh 'docker build --tag actors . '
+                        sh 'docker build --tag awards . '
                     }
 
                     sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
