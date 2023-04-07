@@ -126,17 +126,17 @@ pipeline {
                     //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                     echo "Build Started";
                     dir('./us/actors/'){
-                        sh 'mvn install -f pom.xml';
+                        sh '/usr/bin/mvn install -f pom.xml';
                         sh 'docker build --tag actors . '
                     }
 
                     dir('./us/movies/'){
-                        sh 'mvn install -f pom.xml';
+                        sh '/usr/bin/mvn install -f pom.xml';
                         sh 'docker build --tag movies . '
                     }
 
                     dir('./us/awards/'){
-                        sh 'mvn install -f pom.xml';
+                        sh '/usr/bin/mvn install -f pom.xml';
                         sh 'docker build --tag awards . '
                     }
 
