@@ -134,14 +134,14 @@ pipeline {
 
                     dir('./us/movies/'){
                         sh '/usr/bin/mvn install -f pom.xml';
-                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
+                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
                         sh 'ls -al';
                         sh 'docker build --tag movies . '
                     }
 
                     dir('./us/awards/'){
                         sh '/usr/bin/mvn install -f pom.xml';
-                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
+                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
                         sh 'ls -al';
                         sh 'docker build --tag awards . '
                     }
