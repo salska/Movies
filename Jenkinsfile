@@ -127,7 +127,7 @@ pipeline {
                     echo "Build Started";
                     dir('./us/actors/'){
                         sh '/usr/bin/mvn install -f pom.xml';
-                        sh 'ls -al';
+                        sh 'ls -al /var/lib/jenkins/workspace/Movies_main/us/actors/target/';
                         sh 'docker build --tag actors . '
                     }
 
