@@ -175,7 +175,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.salkabay.ActorsMain</mainClass>
+                            <mainClass>ActorsMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
