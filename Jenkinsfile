@@ -95,10 +95,6 @@ pipeline {
         jdk 'JDK8'
     }
 
-    environment {
-		USACTORS = "actors";
-	}
-
 //	environment {
 //		BBCREDENTIALS = credentials('BBCREDENTIALS');
 //		JENKINS_CREDENTIALS = credentials('jenkadm');
@@ -128,28 +124,36 @@ pipeline {
                     script {
                         //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                         echo "Build Started";
-                            dir('./us/"${env.USACTORS}"/'){
+                            dir('./us/actors/'){
                                 try {
-                                    sh 'docker stop "${env.USACTORS}"'
-                                    sh 'docker rm "${env.USACTORS}"'
+                                    sh 'docker stop actors'
+                                    sh 'docker rm actors'
                                 } catch (Exception e){
-                                    echo "Build Stage "${env.USACTORS}" container not running"
+                                    echo "Build Stage actors container not running"
                                 }
                                 try {
-                                    sh 'docker rmi "${env.USACTORS}":latest'
+                                    sh 'docker rmi actors:latest'
                                 } catch (Exception e){
-                                    echo "Build Stage "${env.USACTORS}" image does not exist"
+                                    echo "Build Stage actors image does not exist"
                                 }
                                 sh '/usr/bin/mvn install -f pom.xml';
-                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/"${env.USACTORS}"/target/*.jar .';
+                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
                                 sh 'ls -al';
-                                sh 'docker build --tag "${env.USACTORS}" . '
+                                sh 'docker build --tag actors . '
                             }
 
                             dir('./us/movies/'){
-                                sh 'docker stop movies'
-                                sh 'docker rm movies'
-                                sh 'docker rmi movies:latest'
+                                try {
+                                    sh 'docker stop movies'
+                                    sh 'docker rm movies'
+                                } catch (Exception e){
+                                    echo "Build Stage movies container not running"
+                                }
+                                try {
+                                    sh 'docker rmi movies:latest'
+                                } catch (Exception e){
+                                    echo "Build Stage movies image does not exist"
+                                }
                                 sh '/usr/bin/mvn install -f pom.xml';
                                 sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
                                 sh 'ls -al';
@@ -157,9 +161,17 @@ pipeline {
                             }
 
                             dir('./us/awards/'){
-                                sh 'docker stop awards'
-                                sh 'docker rm awards'
-                                sh 'docker rmi awards:latest'
+                                try {
+                                    sh 'docker stop awards'
+                                    sh 'docker rm awards'
+                                } catch (Exception e){
+                                    echo "Build Stage awards container not running"
+                                }
+                                try {
+                                    sh 'docker rmi awards:latest'
+                                } catch (Exception e){
+                                    echo "Build Stage awards image does not exist"
+                                }
                                 sh '/usr/bin/mvn install -f pom.xml';
                                 sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
                                 sh 'ls -al';
