@@ -126,32 +126,32 @@ pipeline {
                     //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                     echo "Build Started";
                     dir('./us/actors/'){
-                        sh '/usr/bin/mvn install -f pom.xml';
-                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
-                        sh 'ls -al';
                         sh 'docker stop -s actors'
                         sh 'docker rm actors'
                         sh 'docker rmi actors:latest'
+                        sh '/usr/bin/mvn install -f pom.xml';
+                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
+                        sh 'ls -al';
                         sh 'docker build --tag actors . '
                     }
 
                     dir('./us/movies/'){
-                        sh '/usr/bin/mvn install -f pom.xml';
-                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
-                        sh 'ls -al';
                         sh 'docker stop -s movies'
                         sh 'docker rm movies'
                         sh 'docker rmi movies:latest'
+                        sh '/usr/bin/mvn install -f pom.xml';
+                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
+                        sh 'ls -al';
                         sh 'docker build --tag movies . '
                     }
 
                     dir('./us/awards/'){
-                        sh '/usr/bin/mvn install -f pom.xml';
-                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
-                        sh 'ls -al';
                         sh 'docker stop -s awards'
                         sh 'docker rm awards'
                         sh 'docker rmi awards:latest'
+                        sh '/usr/bin/mvn install -f pom.xml';
+                        sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
+                        sh 'ls -al';
                         sh 'docker build --tag awards . '
                     }
 
