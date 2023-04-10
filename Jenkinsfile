@@ -126,7 +126,7 @@ pipeline {
                     //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                     echo "Build Started";
                     dir('./us/actors/'){
-                        sh 'docker stop -s actors'
+                        sh 'docker stop actors'
                         sh 'docker rm actors'
                         sh 'docker rmi actors:latest'
                         sh '/usr/bin/mvn install -f pom.xml';
@@ -136,7 +136,7 @@ pipeline {
                     }
 
                     dir('./us/movies/'){
-                        sh 'docker stop -s movies'
+                        sh 'docker stop movies'
                         sh 'docker rm movies'
                         sh 'docker rmi movies:latest'
                         sh '/usr/bin/mvn install -f pom.xml';
@@ -146,7 +146,7 @@ pipeline {
                     }
 
                     dir('./us/awards/'){
-                        sh 'docker stop -s awards'
+                        sh 'docker stop awards'
                         sh 'docker rm awards'
                         sh 'docker rmi awards:latest'
                         sh '/usr/bin/mvn install -f pom.xml';
