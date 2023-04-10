@@ -128,22 +128,22 @@ pipeline {
                     script {
                         //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                         echo "Build Started";
-                            dir('./us/${env.USACTORS}/'){
+                            dir('./us/"${env.USACTORS}"/'){
                                 try {
-                                    sh 'docker stop ${env.USACTORS}'
-                                    sh 'docker rm ${env.USACTORS}'
+                                    sh 'docker stop "${env.USACTORS}"'
+                                    sh 'docker rm "${env.USACTORS}"'
                                 } catch (Exception e){
-                                    echo "Build Stage ${env.USACTORS} container not running"
+                                    echo "Build Stage "${env.USACTORS}" container not running"
                                 }
                                 try {
-                                    sh 'docker rmi ${env.USACTORS}:latest'
+                                    sh 'docker rmi "${env.USACTORS}":latest'
                                 } catch (Exception e){
-                                    echo "Build Stage ${env.USACTORS} image does not exist"
+                                    echo "Build Stage "${env.USACTORS}" image does not exist"
                                 }
                                 sh '/usr/bin/mvn install -f pom.xml';
-                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/${env.USACTORS}/target/*.jar .';
+                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/"${env.USACTORS}"/target/*.jar .';
                                 sh 'ls -al';
-                                sh 'docker build --tag ${env.USACTORS} . '
+                                sh 'docker build --tag "${env.USACTORS}" . '
                             }
 
                             dir('./us/movies/'){
