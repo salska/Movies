@@ -127,10 +127,10 @@ pipeline {
                             dir('./us/actors/'){
                                 try {
                                     sh 'docker stop actors'
+                                    sh 'docker rm actors'
                                 } catch (Exception e){
                                     echo "Build Stage actors container not running"
                                 }
-                                sh 'docker rm actors'
                                 sh 'docker rmi actors:latest'
                                 sh '/usr/bin/mvn install -f pom.xml';
                                 sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
