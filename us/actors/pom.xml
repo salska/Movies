@@ -22,7 +22,7 @@
         <vertx.version>3.5.0</vertx.version>
         <junit-jupiter.version>5.4.0</junit-jupiter.version>
 
-        <main.verticle>com.salkabay.ActorsMain</main.verticle>
+        <main.verticle>ActorsMain</main.verticle>
     </properties>
 
     <dependencyManagement>
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
-            <version>4.0.2</version>
+            <version>4.1.5</version>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
@@ -103,12 +103,12 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-sql-client</artifactId>
-            <version>4.0.2</version>
+            <version>4.1.3</version>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web</artifactId>
-            <version>4.0.2</version>
+            <version>4.1.5</version>
         </dependency>
     </dependencies>
 
@@ -163,21 +163,6 @@
                         <argument>run</argument>
                         <argument>${main.verticle}</argument>
                     </arguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <!-- Build an executable JAR -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>ActorsMain</mainClass>
-                        </manifest>
-                    </archive>
                 </configuration>
             </plugin>
         </plugins>
