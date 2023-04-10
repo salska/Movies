@@ -140,6 +140,7 @@ pipeline {
                                 sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
                                 sh 'ls -al';
                                 sh 'docker build --tag actors . '
+                                sh 'docker run -d -p 8048:8048 actors'
                             }
 
                             dir('./us/movies/'){
@@ -158,6 +159,7 @@ pipeline {
                                 sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
                                 sh 'ls -al';
                                 sh 'docker build --tag movies . '
+                                sh 'docker run -d -p 8046:8046 movies'
                             }
 
                             dir('./us/awards/'){
@@ -176,6 +178,7 @@ pipeline {
                                 sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
                                 sh 'ls -al';
                                 sh 'docker build --tag awards . '
+                                sh 'docker run -d -p 8047:8047 awards'
                             }
                         sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
                         archiveArtifacts artifacts: 'app.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
