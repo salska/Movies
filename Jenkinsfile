@@ -119,51 +119,50 @@ pipeline {
     }
 
 	stages {
-        try {
             stage('Build') {
                 steps {
                     script {
                         //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                         echo "Build Started";
-                        dir('./us/actors/'){
-                            sh 'docker stop actors'
-                            sh 'docker rm actors'
-                            sh 'docker rmi actors:latest'
-                            sh '/usr/bin/mvn install -f pom.xml';
-                            sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
-                            sh 'ls -al';
-                            sh 'docker build --tag actors . '
-                        }
+                        try {
+                            dir('./us/actors/'){
+                                sh 'docker stop actors'
+                                sh 'docker rm actors'
+                                sh 'docker rmi actors:latest'
+                                sh '/usr/bin/mvn install -f pom.xml';
+                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
+                                sh 'ls -al';
+                                sh 'docker build --tag actors . '
+                            }
 
-                        dir('./us/movies/'){
-                            sh 'docker stop movies'
-                            sh 'docker rm movies'
-                            sh 'docker rmi movies:latest'
-                            sh '/usr/bin/mvn install -f pom.xml';
-                            sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
-                            sh 'ls -al';
-                            sh 'docker build --tag movies . '
-                        }
+                            dir('./us/movies/'){
+                                sh 'docker stop movies'
+                                sh 'docker rm movies'
+                                sh 'docker rmi movies:latest'
+                                sh '/usr/bin/mvn install -f pom.xml';
+                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
+                                sh 'ls -al';
+                                sh 'docker build --tag movies . '
+                            }
 
-                        dir('./us/awards/'){
-                            sh 'docker stop awards'
-                            sh 'docker rm awards'
-                            sh 'docker rmi awards:latest'
-                            sh '/usr/bin/mvn install -f pom.xml';
-                            sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
-                            sh 'ls -al';
-                            sh 'docker build --tag awards . '
+                            dir('./us/awards/'){
+                                sh 'docker stop awards'
+                                sh 'docker rm awards'
+                                sh 'docker rmi awards:latest'
+                                sh '/usr/bin/mvn install -f pom.xml';
+                                sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
+                                sh 'ls -al';
+                                sh 'docker build --tag awards . '
+                            }
+                        } catch (Exception e){
+                            echo "Build Stage exception, but we continue"
                         }
-
                         sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
                         archiveArtifacts artifacts: 'app.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
                         echo "Build Completed";
                     }
                 }
             }
-        } catch (Exception e){
-            echo "Build Stage exception, but we continue"
-        }
 
         stage('Create infrastructure and deploy code to dev') {
 
