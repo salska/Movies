@@ -119,7 +119,7 @@ pipeline {
     }
 
 	stages {
-        try }
+        try {
             stage('Build') {
                 steps {
                     script {
