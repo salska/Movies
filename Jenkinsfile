@@ -124,9 +124,12 @@ pipeline {
                     script {
                         //input message: "Proceed to ${params.DEPLOY_ENV} deployment? (Click 'Proceed' to continue)";
                         echo "Build Started";
-                        try {
                             dir('./us/actors/'){
-                                sh 'docker stop actors'
+                                try {
+                                    sh 'docker stop actors'
+                                } catch (Exception e){
+                                    echo "Build Stage actors container not running"
+                                }
                                 sh 'docker rm actors'
                                 sh 'docker rmi actors:latest'
                                 sh '/usr/bin/mvn install -f pom.xml';
@@ -154,9 +157,6 @@ pipeline {
                                 sh 'ls -al';
                                 sh 'docker build --tag awards . '
                             }
-                        } catch (Exception e){
-                            echo "Build Stage exception, but we continue"
-                        }
                         sh "zip -r app.zip ./commercial-hbtw-camunda-range-change/target/*.jar Dockerfile ./commercial-hbtw-camunda-range-change/ops/runApp ./${env.configENVFile}";
                         archiveArtifacts artifacts: 'app.zip', excludes: null, fingerprint: true, onlyIfSuccessful: true;
                         echo "Build Completed";
