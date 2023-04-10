@@ -129,6 +129,9 @@ pipeline {
                         sh '/usr/bin/mvn install -f pom.xml';
                         sh 'cp /var/lib/jenkins/workspace/Movies_main/us/actors/target/*.jar .';
                         sh 'ls -al';
+                        sh 'docker stop -s actors'
+                        sh 'docker rm actors'
+                        sh 'docker rmi actors:latest'
                         sh 'docker build --tag actors . '
                     }
 
@@ -136,6 +139,9 @@ pipeline {
                         sh '/usr/bin/mvn install -f pom.xml';
                         sh 'cp /var/lib/jenkins/workspace/Movies_main/us/movies/target/*.jar .';
                         sh 'ls -al';
+                        sh 'docker stop -s movies'
+                        sh 'docker rm movies'
+                        sh 'docker rmi movies:latest'
                         sh 'docker build --tag movies . '
                     }
 
@@ -143,6 +149,9 @@ pipeline {
                         sh '/usr/bin/mvn install -f pom.xml';
                         sh 'cp /var/lib/jenkins/workspace/Movies_main/us/awards/target/*.jar .';
                         sh 'ls -al';
+                        sh 'docker stop -s awards'
+                        sh 'docker rm awards'
+                        sh 'docker rmi awards:latest'
                         sh 'docker build --tag awards . '
                     }
 
